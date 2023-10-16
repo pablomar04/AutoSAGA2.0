@@ -8,7 +8,7 @@ from tkinter import ttk
 class MyApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("AutoSAGA")
+        self.root.title("AutoSAGA 2.0")
         self.root.geometry("250x440")
         # self.time_label = tk.Label(root, text="Tiempo restante: ")
         # self.target_date = datetime(2023, 10, 15, 23, 59, 59)  # Target date and time (adjust as needed)
@@ -53,7 +53,7 @@ class MyApp:
         self.errorlabel = tk.Label(self.tab1)
         self.errorlabel.pack()
 
-        self.botonreclamar = tk.Button(self.tab1, text='Reclamar', command= self.reclamar)
+        self.botonreclamar = tk.Button(self.tab1, text='Reclamar')
         self.botonreclamar.pack(pady=5)
         self.botonborrar = tk.Button(self.tab1, text='Borrar', command= self.borrar)
         self.botonborrar.pack(pady=5)
@@ -68,7 +68,7 @@ class MyApp:
         self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
         self.tab2label.pack()
         
-        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamar)
+        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar')
         self.botonreclamarvarios.pack(pady=5)
         # self.update_timer() 
         
@@ -104,16 +104,18 @@ j
     def error(self):
         self.errorlabel.config(text = "No existe código")
         
-    def armarJson(orden, vin, rec, km, rep, codigo):
+""" def armarJson(orden, vin, rec, km, rep, codigo):
         reclamo = null
-        if (codigo){ #conectar base de datos MongoDB
-            
-        }
+        if (codigo): #conectar base de datos MongoDB
+        """            
         
-    }
-
+        
+    
+"""
     def reclamar(self):
+        self.errorlabel.config(text="Se hizo clic en Reclamar")
         #controlar que ninguno es vacio
+        
         orden_texto = self.ordentexto.get()
         chasis_texto = self.chasistexto.get()
         recepcion_texto = self.recepciontexto.get()
@@ -135,8 +137,8 @@ j
         elif reclamo["codigo"] in datos.codigos_mo:
             manodeobrabonificada.reclamar_manodeobra(reclamo)
         else:
-            self.error(self)
-
+            self.error(self)"""
+ 
 
 if __name__ == "__main__":
     root = tk.Tk()
