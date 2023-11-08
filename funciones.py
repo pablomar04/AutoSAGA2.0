@@ -55,3 +55,19 @@ def completar_datos_principales(tipo, reclamo):
         pyautogui.write(codigos_contratos[codigo][2])
     elif tipo == '11M':
         pyautogui.write(codigos_mo[codigo][2])
+
+def existeCodigo(codigo, templates):    
+    for codes in templates:
+        if codes['codigo'] == codigo:
+            return True
+    return False
+def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, templates):
+    for template in templates:
+        if template['codigo'] == codigo:
+            data = template['data']
+
+    position = pyautogui.locateCenterOnScreen('img/n-reclamacion.png', confidence=0.8)
+    pyautogui.click(position)    
+    pyautogui.write(orden)
+    pyautogui.press('Tab')
+    pyautogui.write()

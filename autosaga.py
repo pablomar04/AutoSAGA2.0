@@ -1,9 +1,14 @@
 import datos
 import contratos
+import funciones
 import manodeobrabonificada
 import tkinter as tk
 from datetime import datetime
 from tkinter import ttk
+import json
+import pymongo
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 class MyApp:
     def __init__(self, root):
@@ -53,7 +58,7 @@ class MyApp:
         self.errorlabel = tk.Label(self.tab1)
         self.errorlabel.pack()
 
-        self.botonreclamar = tk.Button(self.tab1, text='Reclamar')
+        self.botonreclamar = tk.Button(self.tab1, text='Reclamar', command= self.reclamar)
         self.botonreclamar.pack(pady=5)
         self.botonborrar = tk.Button(self.tab1, text='Borrar', command= self.borrar)
         self.botonborrar.pack(pady=5)
@@ -68,9 +73,20 @@ class MyApp:
         self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
         self.tab2label.pack()
         
-        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar')
+        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamar)
         self.botonreclamarvarios.pack(pady=5)
         # self.update_timer() 
+
+        # Traer templates desde mongo
+        uri = "mongodb+srv://pablomar04:auster1900@cluster0.g0ktnap.mongodb.net/?retryWrites=true&w=majority"
+        # Create a new client and connect to the server
+        client = MongoClient(uri, server_api=ServerApi('1'))
+        # Obtener json
+        db = client['work']
+        coleccion = db.get_collection('templates')
+        self.templates = coleccion.find({})
+        #client.close()
+
         
     """"
     def update_timer(self):
@@ -103,17 +119,16 @@ j
 
     def error(self):
         self.errorlabel.config(text = "No existe código")
-        
-""" def armarJson(orden, vin, rec, km, rep, codigo):
-        reclamo = null
-        if (codigo): #conectar base de datos MongoDB
-        """            
-        
-        
     
-"""
+    def armarJson(self):        
+        f = open('template.json')
+        datos = json.load(f)
+        for i in datos['data']:
+            print(i)
+        f.close
+
     def reclamar(self):
-        self.errorlabel.config(text="Se hizo clic en Reclamar")
+        #self.errorlabel.config(text="Se hizo clic en Reclamar")
         #controlar que ninguno es vacio
         
         orden_texto = self.ordentexto.get()
@@ -123,21 +138,10 @@ j
         reparacion_texto = self.reparaciontexto.get()
         codigo_texto = self.codigotexto.get()
 
-        reclamo = {
-            "orden":orden_texto,
-            "chasis":chasis_texto,
-            "recepcion":recepcion_texto,
-            "kilometraje":kilometraje_texto,
-            "reparacion":reparacion_texto,
-            "codigo":codigo_texto
-            }
+        if(funciones.existeCodigo(codigo_texto,self.templates)):
+            
         
-        if reclamo["codigo"] in datos.codigos_contratos:
-            contratos.reclamar_contrato(reclamo)
-        elif reclamo["codigo"] in datos.codigos_mo:
-            manodeobrabonificada.reclamar_manodeobra(reclamo)
-        else:
-            self.error(self)"""
+
  
 
 if __name__ == "__main__":
