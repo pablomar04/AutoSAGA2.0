@@ -83,8 +83,8 @@ class MyApp:
         client = MongoClient(uri, server_api=ServerApi('1'))
         # Obtener json
         db = client['work']
-        coleccion = db.get_collection('templates')
-        self.templates = coleccion.find({})
+        self.coleccion = db.get_collection('templates')
+        #self.templates = coleccion.find({})
         #client.close()
 
         
@@ -138,8 +138,8 @@ j
         reparacion_texto = self.reparaciontexto.get()
         codigo_texto = self.codigotexto.get()
 
-        if(funciones.existeCodigo(codigo_texto,self.templates)):
-            
+        if(funciones.existeCodigo(codigo_texto,self.coleccion)):
+            funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, self.coleccion)
         
 
  

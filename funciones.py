@@ -1,73 +1,72 @@
 import pyautogui
+import re
+import time
 from datos import *
 
-
-def completar_datos_principales(tipo, reclamo):
-    
-    #position = pyautogui.locateCenterOnScreen('img/cc.png', confidence=0.8)
-    #pyautogui.click(position)
-    #position = pyautogui.locateCenterOnScreen('img/numero.png', confidence=0.8)
-    #pyautogui.click(position)
-    #pyautogui.press('Tab')
-
-    position = pyautogui.locateCenterOnScreen('img/n-reclamacion.png', confidence=0.8)
-    pyautogui.click(position)
-    
-    pyautogui.write(reclamo["orden"])
-    pyautogui.press('Tab')
-    pyautogui.write(tipo)
-
-    position = pyautogui.locateCenterOnScreen('img/bastidor.png', confidence=0.8)
-    pyautogui.click(position)
-
-    pyautogui.write(reclamo["chasis"], interval=0.05)
-
-    position = pyautogui.locateCenterOnScreen('img/recepcion.png', confidence=0.8)
-    pyautogui.click(position)
-
-    pyautogui.write(reclamo["recepcion"])
-    pyautogui.press('Tab', presses=2)
-    pyautogui.write(reclamo["kilometraje"])
-
-    position = pyautogui.locateCenterOnScreen('img/at.png', confidence=0.8)
-    pyautogui.click(position)
-
-    codigo = reclamo["codigo"]
-
-    if tipo == 'S10':
-        pyautogui.write(codigos_contratos[codigo][0])
-    elif tipo == '11M':
-        pyautogui.write(codigos_mo[codigo][0])
-    pyautogui.press('Tab')
-    pyautogui.write('0010')
-    pyautogui.press('Tab')
-    pyautogui.write(reclamo["reparacion"])
-
-    position = pyautogui.locateCenterOnScreen('img/proveedor.png', confidence=0.8)
-    pyautogui.click(position)
-
-    pyautogui.write('9AR')
-    
-    position = pyautogui.locateCenterOnScreen('img/comentarios.png', confidence=0.8)
-    pyautogui.click(position)
-    
-    if tipo == 'S10':
-        pyautogui.write(codigos_contratos[codigo][2])
-    elif tipo == '11M':
-        pyautogui.write(codigos_mo[codigo][2])
-
-def existeCodigo(codigo, templates):    
-    for codes in templates:
+def existeCodigo(codigo, coleccion):    
+    for codes in coleccion.find({}):
         if codes['codigo'] == codigo:
             return True
     return False
-def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, templates):
-    for template in templates:
-        if template['codigo'] == codigo:
-            data = template['data']
 
+def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, coleccion):
+    data = None
+    cabecera = None
+
+    for ejemplo in coleccion.find({}):
+        if ejemplo['codigo'] == codigo:
+            data = ejemplo['data']
+    
+    if data is not None:
+        cabecera = data [0]
+    
     position = pyautogui.locateCenterOnScreen('img/n-reclamacion.png', confidence=0.8)
     pyautogui.click(position)    
-    pyautogui.write(orden)
-    pyautogui.press('Tab')
-    pyautogui.write()
+    pyautogui.write(orden, interval=0.05)
+    pyautogui.press('tab')
+    pyautogui.write(cabecera['cabecera']['tipo'], interval=0.05)
+    
+    position = pyautogui.locateCenterOnScreen('img/bastidor.png', confidence=0.8)
+    pyautogui.click(position)
+    pyautogui.write(chasis, interval=0.05)
+
+    position = pyautogui.locateCenterOnScreen('img/recepcion.png', confidence=0.8)
+    pyautogui.click(position)
+    pyautogui.write(recepcion, interval=0.05)
+
+    pyautogui.press('tab', presses=2,interval=0.05)
+    pyautogui.write(kilometraje, interval=0.05)
+
+    position = pyautogui.locateCenterOnScreen('img/at.png', confidence=0.8)
+    pyautogui.click(position)
+    pyautogui.write(cabecera['cabecera']['at'], interval=0.05)
+
+    pyautogui.press('tab')
+    pyautogui.write(cabecera['cabecera']['defecto'], interval=0.05)
+
+    pyautogui.write(cabecera['cabecera']['ubicacion'], interval=0.05)
+
+    pyautogui.write(reparacion, interval=0.05)
+
+    #if criterios
+
+    if (cabecera['cabecera']['criterio']!= ''):
+        cadena = cabecera['cabecera']['criterio']
+        criterios = re.split('\s', cadena)
+
+        position = pyautogui.locateCenterOnScreen('img/criterio.png', confidence=0.8)
+        
+        for cr in criterios:
+            pyautogui.click(position)
+            pyautogui.write(cr, interval=0.05)
+            time.sleep(1)
+            pyautogui.press('enter')
+        
+
+    position = pyautogui.locateCenterOnScreen('img/proveedor.png', confidence=0.8)
+    pyautogui.click(position)
+    pyautogui.write(cabecera['cabecera']['proveedor'], interval=0.05)
+
+    position = pyautogui.locateCenterOnScreen('img/comentarios.png', confidence=0.8)
+    pyautogui.click(position)
+    pyautogui.write(cabecera['cabecera']['comentarios'], interval=0.03)
