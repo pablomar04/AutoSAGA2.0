@@ -139,8 +139,14 @@ j
         codigo_texto = self.codigotexto.get()
 
         if(funciones.existeCodigo(codigo_texto,self.coleccion)):
-            funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, self.coleccion)
-        
+            data = None
+            for ejemplo in self.coleccion.find({}):
+             if ejemplo['codigo'] == codigo_texto:
+                data = ejemplo['data']
+            
+            funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, data)
+            
+            funciones.cargarLocal(data)
 
  
 

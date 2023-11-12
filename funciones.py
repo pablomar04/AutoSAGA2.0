@@ -9,14 +9,9 @@ def existeCodigo(codigo, coleccion):
             return True
     return False
 
-def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, coleccion):
-    data = None
-    cabecera = None
-
-    for ejemplo in coleccion.find({}):
-        if ejemplo['codigo'] == codigo:
-            data = ejemplo['data']
+def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, data):
     
+    cabecera = None    
     if data is not None:
         cabecera = data [0]
     
@@ -70,3 +65,43 @@ def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, co
     position = pyautogui.locateCenterOnScreen('img/comentarios.png', confidence=0.8)
     pyautogui.click(position)
     pyautogui.write(cabecera['cabecera']['comentarios'], interval=0.03)
+
+def cargarLocal(data):
+    
+    objeto = None
+
+    if data is not None:
+        objeto = data [1]
+    
+    if "local" in objeto:
+        
+        position = pyautogui.locateCenterOnScreen('img/local.png', confidence=0.8)
+        pyautogui.click(position)
+
+        if "mo" in objeto['local']:
+            for op in objeto['local']['mo']:
+                position = pyautogui.locateCenterOnScreen('img/entrada1.png', confidence=0.8)
+                pyautogui.click(position)
+
+                if op['causal'] == 1:
+                    position = pyautogui.locateCenterOnScreen('img/causal-local.png', confidence=0.8)
+                    pyautogui.click(position)
+
+                pyautogui.write(op['operacion'], interval=0.05)
+                pyautogui.press('tab', presses=2, interval=0.05)
+                pyautogui.write(op['ut'], interval=0.05)
+                pyautogui.press('enter')
+        
+        if "material" in objeto['local']:
+            for pieza in objeto['local']['material']:
+                position = pyautogui.locateCenterOnScreen('img/entrada2.png', confidence=0.9)
+                pyautogui.click(position)
+
+                if pieza['causal'] == 1:
+                    position = pyautogui.locateCenterOnScreen('img/causal-local.png', confidence=0.8)
+                    pyautogui.click(position)
+
+                pyautogui.write(pieza['codigo'], interval=0.05)
+                pyautogui.press('tab')
+                pyautogui.write(pieza['cantidad'], interval=0.05)
+                pyautogui.press('enter')
