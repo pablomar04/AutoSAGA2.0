@@ -13,7 +13,12 @@ def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, da
     cabecera = None    
     if data is not None:
         cabecera = data [0]
-    
+    position = pyautogui.locateCenterOnScreen('img/cc.png', confidence=0.8)
+    pyautogui.click(position)
+    pyautogui.press('down')
+    pyautogui.press('enter')
+    pyautogui.press('tab')
+
     position = pyautogui.locateCenterOnScreen('img/n-reclamacion.png', confidence=0.8)
     pyautogui.click(position)    
     pyautogui.write(orden, interval=0.05)
@@ -38,8 +43,10 @@ def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, da
     pyautogui.press('tab')
     pyautogui.write(cabecera['cabecera']['defecto'], interval=0.05)
 
-    pyautogui.write(cabecera['cabecera']['ubicacion'], interval=0.05)
-
+    if (cabecera['cabecera']['ubicacion']!= ''):
+        pyautogui.write(cabecera['cabecera']['ubicacion'], interval=0.05)
+    else:
+        pyautogui.press('tab')
     pyautogui.write(reparacion, interval=0.05)
     #if Inmovilizado / TPI
     #if criterios
@@ -86,7 +93,9 @@ def cargarLocal(data):
                     pyautogui.click(position)
 
                 pyautogui.write(op['operacion'], interval=0.05)
-                pyautogui.press('tab', presses=2, interval=0.05)
+                pyautogui.press('tab')
+                pyautogui.press('tab')
+                pyautogui.press('tab')
                 pyautogui.write(op['ut'], interval=0.05)
                 pyautogui.press('enter')
         
@@ -104,8 +113,7 @@ def cargarLocal(data):
                 pyautogui.write(pieza['cantidad'], interval=0.05)
                 pyautogui.press('enter')
 
-        position = pyautogui.locateCenterOnScreen('img/completar.png', confidence=0.8)
-        pyautogui.moveTo(position)
+
 
 def cargarTercero(data):
     
@@ -156,5 +164,3 @@ def cargarTercero(data):
                 pyautogui.write(pieza['importe'], interval=0.05)
                 pyautogui.press('enter')
 
-        position = pyautogui.locateCenterOnScreen('img/completar.png', confidence=0.8)
-        pyautogui.moveTo(position)

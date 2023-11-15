@@ -1,4 +1,5 @@
 import constantes as const
+import pyautogui
 import funciones
 import tkinter as tk
 from datetime import datetime
@@ -7,21 +8,22 @@ import json
 import pymongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import time
 
 class MyApp:
     def __init__(self, root):
         self.root = root
         self.root.title("AutoSAGA 2.0")
         self.root.geometry("250x440")
-        # self.time_label = tk.Label(root, text="Tiempo restante: ")
-        # self.target_date = datetime(2023, 10, 15, 23, 59, 59)  # Target date and time (adjust as needed)
+        self.time_label = tk.Label(root, text="Tiempo restante: ")
+        #self.target_date = datetime(2023, 10, 15, 23, 59, 59)  # Target date and time (adjust as needed)
         
         self.panel = ttk.Notebook(self.root)
         self.panel.pack(fill="both", expand="yes")
         self.tab1 = ttk.Frame(self.panel)
         self.panel.add(self.tab1, text="Carga unitaria")
-        #self.tab2 = ttk.Frame(self.panel)
-        #self.panel.add(self.tab2, text="Carga multiple")
+        self.tab2 = ttk.Frame(self.panel)
+        self.panel.add(self.tab2, text="Carga multiple")
         
         
         self.ordenlabel = tk.Label(self.tab1, text='Orden')
@@ -61,19 +63,19 @@ class MyApp:
         self.botonborrar = tk.Button(self.tab1, text='Borrar', command= self.borrar)
         self.botonborrar.pack(pady=5)
 
-        # self.time_label.pack(pady=10)#linea agregada
+        #self.time_label.pack(pady=10)#linea agregada
         
 
         copyright = u"\u00A9"
         self.copyrightlabel = tk.Label(self.tab1, text=copyright + " JPsoft")
         self.copyrightlabel.pack(pady=10)
 
-        #self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
-        #self.tab2label.pack()
+        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
+        self.tab2label.pack()
         
-        #self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamar)
-        #self.botonreclamarvarios.pack(pady=5)
-        # self.update_timer() 
+        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamarMultiples)
+        self.botonreclamarvarios.pack(pady=5)
+        #self.update_timer() 
 
         # Traer templates desde mongo
         uri = "mongodb+srv://"+const.USER_MONGO+":"+const.PASS_MONGO+"@cluster0.g0ktnap.mongodb.net/?retryWrites=true&w=majority"
@@ -118,16 +120,7 @@ j
     def codigoError(self, texto):
         self.errorlabel.config(text = texto)
     
-    def armarJson(self):        
-        f = open('template.json')
-        datos = json.load(f)
-        for i in datos['data']:
-            print(i)
-        f.close
-
     def reclamar(self):
-        #self.errorlabel.config(text="Se hizo clic en Reclamar")
-        #controlar que ninguno es vacio
         
         orden_texto = self.ordentexto.get()
         chasis_texto = self.chasistexto.get()
@@ -150,10 +143,49 @@ j
 
                 funciones.cargarTercero(data)
 
+                position = pyautogui.locateCenterOnScreen('img/completar.png', confidence=0.8)
+                pyautogui.moveTo(position)
+                #pyautogui.click(position)
+
             else:
                 self.codigoError("No existe código")
         else:
             self.codigoError("Faltan ingresar datos")
+
+    def reclamarMultiples(self):
+        
+        f = open('reclamos.json')
+        datos = json.load(f)
+        for i in datos['reclamos']:
+            
+            orden_texto = i['orden']
+            chasis_texto = i['chasis']
+            recepcion_texto = i['recepcion']
+            kilometraje_texto = i['kilometraje']
+            reparacion_texto = i['reparacion']
+            codigo_texto = i['codigo']
+
+            if orden_texto and chasis_texto and recepcion_texto and kilometraje_texto and reparacion_texto and codigo_texto:
+                if (funciones.existeCodigo(codigo_texto,self.coleccion)):
+                    data = None
+                    for ejemplo in self.coleccion:
+                        if ejemplo['codigo'] == codigo_texto:
+                            data = ejemplo['data']
+                    
+                    funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, data)
+                    
+                    funciones.cargarLocal(data)
+
+                    funciones.cargarTercero(data)
+
+                    position = pyautogui.locateCenterOnScreen('img/completar.png', confidence=0.8)
+                    pyautogui.click(position)
+                    time.sleep(3)
+                else:
+                    self.codigoError("No existe código")
+            else:
+                self.codigoError("Faltan ingresar datos")
+        f.close        
 
 if __name__ == "__main__":
     root = tk.Tk()

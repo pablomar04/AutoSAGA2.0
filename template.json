@@ -1,39 +1,37 @@
 {
     "status": "success",
-    "codigo":"a11",
+    "codigo":"69ew",
     "data": [  {     
         "cabecera" : {
             "orden": "",
-            "tipo": "S10",
+            "tipo": "710",
             "vin": "",
             "recepcion": "",
             "kilometraje": "",
-            "at": "X030",
-            "defecto": "0010",
-            "ubicacion": "002",
+            "at": "69EW",
+            "defecto": "0099",
+            "ubicacion": "",
             "reparacion": "",
-            "criterio": "",
+            "criterio": "01",
             "proveedor": "9AR",
-            "comentarios": "1er servicio Amarok con contrato"
+            "comentarios": "Campaña 69EW - Se desmontó unidad de airbag de pasajero y se reemplazó generador de gas"
             }
         
         }    ,
 
-        {        
-        "tercero": {
-            "emo":[{
-                "causal":0,
-                "operacion":"X0300000",
-                "importe":"19319"
+        {
+            "local":{
+                "mo":[{
+                    "causal":0,
+                    "operacion":"69594999",
+                    "ut":"110"
+                    }
+                    ],
+                "material": [{
+                    "causal": 1,
+                    "codigo": "5Z0998052C",
+                    "cantidad": "1"
                 }
-                ],
-            "ematerial": [{
-                "causal": 1,
-                "codigo": "MAT-OTROS",
-                "comentario":"MATERIALES",
-                "cantidad": "1",
-                "importe": "60375"
-                }]
-        }
-    }]   
+            ]}
+        }]   
 }

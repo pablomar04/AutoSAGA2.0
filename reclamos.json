@@ -1,0 +1,24 @@
+{
+    "reclamos" :
+        [
+            {
+                "orden" : "610997",
+                "chasis" : "9BWBH6BF3N4070930",
+                "recepcion" : "14.11.23",
+                "kilometraje" : "15188",
+                "reparacion" : "14.11.23",
+                "codigo" : "n13"
+            }
+            ,
+
+            {
+                "orden" : "210993",
+                "chasis" : "8AWBJ6B27NA841248",
+                "recepcion" : "14.11.23",
+                "kilometraje" : "30391",
+                "reparacion" : "14.11.23",
+                "codigo" : "n24"
+            }
+
+        ]
+    }
