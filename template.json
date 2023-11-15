@@ -1,76 +1,39 @@
 {
     "status": "success",
-    "codigo":"abcd",
+    "codigo":"a11",
     "data": [  {     
         "cabecera" : {
             "orden": "",
-            "tipo": "110",
+            "tipo": "S10",
             "vin": "",
             "recepcion": "",
             "kilometraje": "",
-            "at": "AB12",
+            "at": "X030",
             "defecto": "0010",
             "ubicacion": "002",
             "reparacion": "",
             "criterio": "",
-            "proveedor": "k21",
-            "comentarios": "Lorem ipsum..."
+            "proveedor": "9AR",
+            "comentarios": "1er servicio Amarok con contrato"
             }
         
         }    ,
-        {
-        "local":{
-            "mo":[{
-                "causal":0,
-                "operacion":"12345678",
-                "ut":"50"
-                },
-                {
-                "causal":0,
-                "operacion":"12345678",
-                "ut":"50"
-                }
-                ],
-            "material": [{
-                "causal": 1,
-                "codigo": "5Z0123456ABXYZ",
-                "cantidad": "1"
-            },
-            {
-                "causal": 1,
-                "codigo": "5Z0123456ABXYZ",
-                "cantidad": "1"
-            }
-        ]}
-        }
-        ,
+
         {        
         "tercero": {
             "emo":[{
                 "causal":0,
-                "operacion":"12345678",
-                "importe":1500
-                },
-                {
-                "causal":0,
-                "operacion":"12345678",
-                "importe":515000
+                "operacion":"X0300000",
+                "importe":"19319"
                 }
                 ],
             "ematerial": [{
-                "causal":0,
+                "causal": 1,
                 "codigo": "MAT-OTROS",
-                "comentario":"",
-                "cantidad": 1,
-                "importe": 120
-                },
-                {
-                "causal":0,
-                "codigo": "MAT-OTROS",
-                "comentario":"",
-                "cantidad": 1,
-                "importe": 120
-            }]
+                "comentario":"MATERIALES",
+                "cantidad": "1",
+                "importe": "60375"
+                }]
         }
     }]   
 }

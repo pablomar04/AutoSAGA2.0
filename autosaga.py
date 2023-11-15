@@ -1,7 +1,5 @@
-import datos
-import contratos
+import constantes as const
 import funciones
-import manodeobrabonificada
 import tkinter as tk
 from datetime import datetime
 from tkinter import ttk
@@ -22,8 +20,8 @@ class MyApp:
         self.panel.pack(fill="both", expand="yes")
         self.tab1 = ttk.Frame(self.panel)
         self.panel.add(self.tab1, text="Carga unitaria")
-        self.tab2 = ttk.Frame(self.panel)
-        self.panel.add(self.tab2, text="Carga multiple")
+        #self.tab2 = ttk.Frame(self.panel)
+        #self.panel.add(self.tab2, text="Carga multiple")
         
         
         self.ordenlabel = tk.Label(self.tab1, text='Orden')
@@ -70,22 +68,22 @@ class MyApp:
         self.copyrightlabel = tk.Label(self.tab1, text=copyright + " JPsoft")
         self.copyrightlabel.pack(pady=10)
 
-        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
-        self.tab2label.pack()
+        #self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
+        #self.tab2label.pack()
         
-        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamar)
-        self.botonreclamarvarios.pack(pady=5)
+        #self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamar)
+        #self.botonreclamarvarios.pack(pady=5)
         # self.update_timer() 
 
         # Traer templates desde mongo
-        uri = "mongodb+srv://pablomar04:auster1900@cluster0.g0ktnap.mongodb.net/?retryWrites=true&w=majority"
+        uri = "mongodb+srv://"+const.USER_MONGO+":"+const.PASS_MONGO+"@cluster0.g0ktnap.mongodb.net/?retryWrites=true&w=majority"
         # Create a new client and connect to the server
         client = MongoClient(uri, server_api=ServerApi('1'))
         # Obtener json
         db = client['work']
-        self.coleccion = db.get_collection('templates')
+        self.coleccion = list (db.get_collection('templates').find({}))
         #self.templates = coleccion.find({})
-        #client.close()
+        client.close()
 
         
     """"
@@ -117,8 +115,8 @@ j
         self.codigotexto.delete(0,'end')
         self.errorlabel.config(text = "")
 
-    def error(self):
-        self.errorlabel.config(text = "No existe código")
+    def codigoError(self, texto):
+        self.errorlabel.config(text = texto)
     
     def armarJson(self):        
         f = open('template.json')
@@ -138,17 +136,24 @@ j
         reparacion_texto = self.reparaciontexto.get()
         codigo_texto = self.codigotexto.get()
 
-        if(funciones.existeCodigo(codigo_texto,self.coleccion)):
-            data = None
-            for ejemplo in self.coleccion.find({}):
-             if ejemplo['codigo'] == codigo_texto:
-                data = ejemplo['data']
-            
-            funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, data)
-            
-            funciones.cargarLocal(data)
+        if orden_texto and chasis_texto and recepcion_texto and kilometraje_texto and reparacion_texto and codigo_texto:
+        
+            if (funciones.existeCodigo(codigo_texto,self.coleccion)):
+                data = None
+                for ejemplo in self.coleccion:
+                    if ejemplo['codigo'] == codigo_texto:
+                        data = ejemplo['data']
+                
+                funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, data)
+                
+                funciones.cargarLocal(data)
 
- 
+                funciones.cargarTercero(data)
+
+            else:
+                self.codigoError("No existe código")
+        else:
+            self.codigoError("Faltan ingresar datos")
 
 if __name__ == "__main__":
     root = tk.Tk()
