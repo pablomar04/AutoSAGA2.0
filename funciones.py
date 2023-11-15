@@ -132,7 +132,7 @@ def cargarTercero(data):
 
         if "emo" in objeto['tercero']:
             for op in objeto['tercero']['emo']:
-                position = pyautogui.locateCenterOnScreen('img/entrada3.png', confidence=0.8)
+                position = pyautogui.locateCenterOnScreen('img/entrada3.png', confidence=0.7)
                 pyautogui.click(position)
 
                 if op['causal'] == 1:

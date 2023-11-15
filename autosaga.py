@@ -70,7 +70,7 @@ class MyApp:
         self.copyrightlabel = tk.Label(self.tab1, text=copyright + " JPsoft")
         self.copyrightlabel.pack(pady=10)
 
-        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo data.json')
+        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
         self.tab2label.pack()
         
         self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamarMultiples)
@@ -180,7 +180,7 @@ j
 
                     position = pyautogui.locateCenterOnScreen('img/completar.png', confidence=0.8)
                     pyautogui.click(position)
-                    time.sleep(3)
+                    time.sleep(4)
                 else:
                     self.codigoError("No existe código")
             else:
