@@ -1,6 +1,6 @@
 {
     "status": "success",
-    "codigo":"40t1-16",
+    "codigo":"69ew-01",
     "data": [  {     
         "cabecera" : {
             "orden": "",
@@ -8,13 +8,13 @@
             "vin": "",
             "recepcion": "",
             "kilometraje": "",
-            "at": "40T1",
+            "at": "69EW",
             "defecto": "0099",
             "ubicacion": "",
             "reparacion": "",
-            "criterio": "16",
-            "proveedor": "2BR",
-            "comentarios": "Campaña 40T1 - Se reemplazaron tornillos de fijacion de soporte de airbag de acompañante"
+            "criterio": "01",
+            "proveedor": "9AR",
+            "comentarios": "Campaña 69EW - Se reemplazó generador de gas del airbag para acompañante"
             }
         
         }    ,
@@ -23,15 +23,15 @@
             "local":{
                 "mo":[{
                     "causal":0,
-                    "operacion":"51161099",
-                    "ut":"40"
+                    "operacion":"69594999",
+                    "ut":"110"
                     }
                     ],
-                    "material": [{
-                        "causal": 1,
-                        "codigo": "N  91093502",
-                        "cantidad": "4"
-                    }
-                ]}
+            "material": [{
+                "causal": 1,
+                "codigo": "5Z0998052C",
+                "cantidad": "1"
+                }]
+            }
         }]   
 }
