@@ -13,11 +13,11 @@ def cargarCabecera(orden, chasis, recepcion, kilometraje, reparacion, codigo, da
     cabecera = None    
     if data is not None:
         cabecera = data [0]
-    position = pyautogui.locateCenterOnScreen('img/cc.png', confidence=0.8)
-    pyautogui.click(position)
-    pyautogui.press('down')
-    pyautogui.press('enter')
-    pyautogui.press('tab')
+    #position = pyautogui.locateCenterOnScreen('img/cc.png', confidence=0.8)
+    #pyautogui.click(position)
+    #pyautogui.press('down')
+    #pyautogui.press('enter')
+    #pyautogui.press('tab')
 
     position = pyautogui.locateCenterOnScreen('img/n-reclamacion.png', confidence=0.8)
     pyautogui.click(position)    

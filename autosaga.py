@@ -16,7 +16,7 @@ class MyApp:
         self.root.title("AutoSAGA 2.0")
         self.root.geometry("250x440")
         self.time_label = tk.Label(root, text="Tiempo restante: ")
-        #self.target_date = datetime(2023, 10, 15, 23, 59, 59)  # Target date and time (adjust as needed)
+        self.target_date = datetime(2024, 2, 29, 23, 59, 59)  # Target date and time (adjust as needed)
         
         self.panel = ttk.Notebook(self.root)
         self.panel.pack(fill="both", expand="yes")
@@ -63,19 +63,20 @@ class MyApp:
         self.botonborrar = tk.Button(self.tab1, text='Borrar', command= self.borrar)
         self.botonborrar.pack(pady=5)
 
-        #self.time_label.pack(pady=10)#linea agregada
+        self.time_label.pack(pady=10)#linea agregada
         
 
         copyright = u"\u00A9"
         self.copyrightlabel = tk.Label(self.tab1, text=copyright + " JPsoft")
         self.copyrightlabel.pack(pady=10)
 
-        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
+        #self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
+        self.tab2label = tk.Label(self.tab2, text='¡Próximamente!')
         self.tab2label.pack()
         
-        self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamarMultiples)
-        self.botonreclamarvarios.pack(pady=5)
-        #self.update_timer() 
+        #self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamarMultiples)
+        #self.botonreclamarvarios.pack(pady=5)
+        self.update_timer() 
 
         # Traer templates desde mongo
         uri = "mongodb+srv://"+const.USER_MONGO+":"+const.PASS_MONGO+"@cluster0.g0ktnap.mongodb.net/?retryWrites=true&w=majority"
@@ -88,7 +89,7 @@ class MyApp:
         client.close()
 
         
-    """"
+    
     def update_timer(self):
         current_date = datetime.now()
         remaining_time = self.target_date - current_date
@@ -103,7 +104,7 @@ class MyApp:
             time_string = "{:02d}:{:02d}:{:02d}:{:02d}".format(days, hours, minutes, seconds)
             self.time_label.config(text="Tiempo restante: {}".format(time_string))
             self.root.after(1000, self.update_timer)
-j
+
     def show_expired_message(self):
         self.time_label.config(text="Tiempo expirado! Cerrando la app...")
         self.root.after(2000, self.root.destroy)  # Close the app after 2 seconds """
