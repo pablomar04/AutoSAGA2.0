@@ -22,8 +22,8 @@ class MyApp:
         self.panel.pack(fill="both", expand="yes")
         self.tab1 = ttk.Frame(self.panel)
         self.panel.add(self.tab1, text="Carga unitaria")
-        #self.tab2 = ttk.Frame(self.panel)
-        #self.panel.add(self.tab2, text="Carga multiple")
+        self.tab2 = ttk.Frame(self.panel)
+        self.panel.add(self.tab2, text="Carga multiple")
         
         
         self.ordenlabel = tk.Label(self.tab1, text='Orden')
@@ -70,9 +70,9 @@ class MyApp:
         self.copyrightlabel = tk.Label(self.tab1, text=copyright + " JPsoft")
         self.copyrightlabel.pack(pady=10)
 
-        #self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
-        #self.tab2label = tk.Label(self.tab2, text='¡Próximamente!')
-        #self.tab2label.pack()
+        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
+        self.tab2label = tk.Label(self.tab2, text='¡Próximamente!')
+        self.tab2label.pack()
         
         #self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamarMultiples)
         #self.botonreclamarvarios.pack(pady=5)
