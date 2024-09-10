@@ -123,11 +123,66 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 # Obtener json
 db = client['work']
 
-db.templates.update_one({'codigo':"d55"}, {'$set': {"data.1.tercero.emo.0.importe": "999"}})
-db.templates.update_one({'codigo':"d55"}, {'$set': {"data.1.tercero.ematerial.0.importe": "999"}})
+manodeobra = "data.1.tercero.emo.0.importe"
+material = "data.1.tercero.ematerial.0.importe"
 
-
+#db.templates.update_one({'codigo':"d55"}, {'$set': {"data.1.tercero.emo.0.importe": "999"}})
+#db.templates.update_one({'codigo':"d55"}, {'$set': {"data.1.tercero.ematerial.0.importe": "999"}})
+#############################
+##Actualizacion precios Nafta
+#############################
+vehiculo = "n"
+servicio = 1
+while servicio<=7:
+      i = 0
+      arreglo =""
+      arreglo = vehiculo + str(servicio)
+      while i < 14:
+            gamma = i // 2
+            gamma+=1
+            codigo = vehiculo + str(servicio) + str(gamma)      
+            db.templates.update_one({'codigo':codigo}, {'$set': {manodeobra: str(eval(arreglo)[i])}})
+            db.templates.update_one({'codigo':codigo}, {'$set': {material: str(eval(arreglo)[i+1])}})                  
+            i+=2
+      
+      servicio+=1
+##############################
+##Actualizacion precios Diesel
+##############################
+vehiculo = "d"
+servicio = 1
+while servicio <= 5:
+      i = 0
+      arreglo =""
+      arreglo = vehiculo + str(servicio)
+      while i < 6:
+            gamma = (i + 8) // 2
+            gamma+=1
+            codigo = vehiculo + str(servicio) + str(gamma)      
+            db.templates.update_one({'codigo':codigo}, {'$set': {manodeobra: str(eval(arreglo)[i])}})
+            db.templates.update_one({'codigo':codigo}, {'$set': {material: str(eval(arreglo)[i+1])}})                  
+            i+=2
+      
+      servicio+=1
+##############################
+##Actualizacion precios Amarok
+##############################
+vehiculo = "a"
+servicio = 1
+while servicio <= 10:
+      i = 0
+      arreglo =""
+      arreglo = vehiculo + str(servicio)
+      while i < 4:
+            gamma = i // 2
+            gamma+=1
+            codigo = vehiculo + str(servicio) + str(gamma)      
+            db.templates.update_one({'codigo':codigo}, {'$set': {manodeobra: str(eval(arreglo)[i])}})
+            db.templates.update_one({'codigo':codigo}, {'$set': {material: str(eval(arreglo)[i+1])}})                  
+            i+=2
+      
+      servicio+=1
+##############################
 client.close()
 
-for x in n2:
-    print(x)
+
