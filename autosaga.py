@@ -22,8 +22,8 @@ class MyApp:
         self.panel.pack(fill="both", expand="yes")
         self.tab1 = ttk.Frame(self.panel)
         self.panel.add(self.tab1, text="Carga unitaria")
-        self.tab2 = ttk.Frame(self.panel)
-        self.panel.add(self.tab2, text="Carga multiple")
+        #self.tab2 = ttk.Frame(self.panel)
+        #self.panel.add(self.tab2, text="Carga multiple")
         
         
         self.ordenlabel = tk.Label(self.tab1, text='Orden')
@@ -62,6 +62,9 @@ class MyApp:
         self.botonreclamar.pack(pady=5)
         self.botonborrar = tk.Button(self.tab1, text='Borrar', command= self.borrar)
         self.botonborrar.pack(pady=5)
+        
+        self.botonjson = tk.Button(self.tab1, text='Json', command= self.cargaJson)
+        self.botonjson.pack(pady=5)
 
         self.time_label.pack(pady=10)#linea agregada
         
@@ -70,9 +73,9 @@ class MyApp:
         self.copyrightlabel = tk.Label(self.tab1, text=copyright + " JPsoft")
         self.copyrightlabel.pack(pady=10)
 
-        self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
-        self.tab2label = tk.Label(self.tab2, text='¡Próximamente!')
-        self.tab2label.pack()
+        #self.tab2label = tk.Label(self.tab2, text='Atención!\n Carga múltiple desde el archivo reclamos.json')
+        #self.tab2label = tk.Label(self.tab2, text='¡Próximamente!')
+        #self.tab2label.pack()
         
         #self.botonreclamarvarios = tk.Button(self.tab2, text='Reclamar', command= self.reclamarMultiples)
         #self.botonreclamarvarios.pack(pady=5)
@@ -153,39 +156,19 @@ class MyApp:
         else:
             self.codigoError("Faltan ingresar datos")
 
-    def reclamarMultiples(self):
+    def cargaJson(self):
         
-        f = open('reclamos.json')
-        datos = json.load(f)
-        for i in datos['reclamos']:
+        with open('archivo.json', encoding='utf8') as f:
             
-            orden_texto = i['orden']
-            chasis_texto = i['chasis']
-            recepcion_texto = i['recepcion']
-            kilometraje_texto = i['kilometraje']
-            reparacion_texto = i['reparacion']
-            codigo_texto = i['codigo']
+            datos = json.load(f)     
+            
+            self.ordentexto.insert(0,str(datos['orden']))
+            self.chasistexto.insert(0,str(datos['chasis']))
+            self.recepciontexto.insert(0,str(datos['apertura']))
+            self.kilometrajetexto.insert(0,str(datos['kilometraje']))
+            self.reparaciontexto.insert(0,str(datos['cierre']))
+            self.codigotexto.insert(0,str(datos['codigo']))
 
-            if orden_texto and chasis_texto and recepcion_texto and kilometraje_texto and reparacion_texto and codigo_texto:
-                if (funciones.existeCodigo(codigo_texto,self.coleccion)):
-                    data = None
-                    for ejemplo in self.coleccion:
-                        if ejemplo['codigo'] == codigo_texto:
-                            data = ejemplo['data']
-                    
-                    funciones.cargarCabecera(orden_texto, chasis_texto, recepcion_texto, kilometraje_texto, reparacion_texto, codigo_texto, data)
-                    
-                    funciones.cargarLocal(data)
-
-                    funciones.cargarTercero(data)
-
-                    position = pyautogui.locateCenterOnScreen('img/completar.png', confidence=0.8)
-                    pyautogui.click(position)
-                    time.sleep(4)
-                else:
-                    self.codigoError("No existe código")
-            else:
-                self.codigoError("Faltan ingresar datos")
         f.close        
 
 if __name__ == "__main__":
