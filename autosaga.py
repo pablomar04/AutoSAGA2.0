@@ -16,7 +16,7 @@ class MyApp:
         self.root.title("AutoSAGA 2.0")
         self.root.geometry("250x440")
         self.time_label = tk.Label(root, text="Tiempo restante: ")
-        self.target_date = datetime(2025, 1, 31, 23, 59, 59)  # Target date and time (adjust as needed)
+        self.target_date = datetime(2025, 12, 31, 23, 59, 59)  # Target date and time (adjust as needed)
         
         self.panel = ttk.Notebook(self.root)
         self.panel.pack(fill="both", expand="yes")
@@ -158,7 +158,7 @@ class MyApp:
 
     def cargaJson(self):
         
-        with open('archivo.json', encoding='utf8') as f:
+        with open('G:/JuanM/reclamos-json/archivo.json', encoding='utf8') as f:
             
             datos = json.load(f)     
             
